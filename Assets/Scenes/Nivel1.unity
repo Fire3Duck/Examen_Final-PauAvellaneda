@@ -4561,6 +4561,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4636,12 +4637,29 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -95.1, y: -3.3, z: -10}
+  m_LocalPosition: {x: -52, y: -0.82, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c93c43142870f449b05e4574905f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTransform: {fileID: 7102897459548015061}
+  offset: {x: 0, y: 0, z: -1}
+  maxPosition: {x: -52, y: -0.82}
+  minPosition: {x: -103, y: -2.4}
+  interpolationRatio: 0
 --- !u!1 &552328802
 GameObject:
   m_ObjectHideFlags: 0
@@ -11794,6 +11812,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1407787195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1407787196}
+  m_Layer: 0
+  m_Name: BulletSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1407787196
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407787195}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.44, y: 0.72, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7102897459548015061}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1441577005
 GameObject:
   m_ObjectHideFlags: 0
@@ -17256,10 +17305,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 555363733}
     m_Modifications:
     - target: {fileID: 1051710666516161377, guid: 416fa8f65424d454e9e3e85734089eb1, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1051710666516161377, guid: 416fa8f65424d454e9e3e85734089eb1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -77.6
       objectReference: {fileID: 0}
@@ -17325,6 +17370,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mario
       objectReference: {fileID: 0}
+    - target: {fileID: 7102897459264945057, guid: 457cbd0a68e12d34aa6e0bc2bcb40d2c, type: 3}
+      propertyPath: fireSpawn
+      value: 
+      objectReference: {fileID: 1407787196}
+    - target: {fileID: 7102897459264945057, guid: 457cbd0a68e12d34aa6e0bc2bcb40d2c, type: 3}
+      propertyPath: firePrefab
+      value: 
+      objectReference: {fileID: 9218291562824474540, guid: 4473c0c0e9139d948a5e4959455b239d, type: 3}
     - target: {fileID: 7102897459264945057, guid: 457cbd0a68e12d34aa6e0bc2bcb40d2c, type: 3}
       propertyPath: attackRange
       value: 1
@@ -17396,12 +17449,20 @@ PrefabInstance:
     - target: {fileID: 7102897459264945070, guid: 457cbd0a68e12d34aa6e0bc2bcb40d2c, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9100000, guid: 5a3f53adc10ccb64dbd199a2100d1d47, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7102897459264945059, guid: 457cbd0a68e12d34aa6e0bc2bcb40d2c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1407787196}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 457cbd0a68e12d34aa6e0bc2bcb40d2c, type: 3}
+--- !u!4 &7102897459548015061 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7102897459264945059, guid: 457cbd0a68e12d34aa6e0bc2bcb40d2c, type: 3}
+  m_PrefabInstance: {fileID: 7102897459548015060}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

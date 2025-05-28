@@ -14,12 +14,17 @@ public class PlayerController : MonoBehaviour
     //Variable para acceder al RigidBody2D
     private Rigidbody2D rBody;
     //Variable para acceder al GroundSensor
-    private GroundSensor sensor;
+    private GroundSensor _groundSensor;
 
     //Variable para almacenar el input de movimiento
     float horizontal;
 
     GameManager gameManager;
+    
+    private Animator _animator;
+
+    public Transform fireSpawn;
+    public GameObject firePrefab;
 
     void Awake()
     {
@@ -28,9 +33,10 @@ public class PlayerController : MonoBehaviour
         //Asignamos la variable del Rigidbody2D con el componente que tiene este objeto
         rBody = GetComponent<Rigidbody2D>();
         //Buscamos un Objeto por su nombre, cojemos el Componente GroundSensor de este objeto y lo asignamos a la variable
-        sensor = GameObject.Find("GroundSensor").GetComponent<GroundSensor>();
+        _groundSensor = GameObject.Find("GroundSensor").GetComponent<GroundSensor>();
         //Buscamos el objeto del GameManager y SFXManager lo asignamos a las variables
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();        
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _animator = GetComponent<Animator>();      
     }
 
     // Update is called once per frame
@@ -43,20 +49,33 @@ public class PlayerController : MonoBehaviour
         
         horizontal = Input.GetAxis("Horizontal");
 
-        if(horizontal < 0)
-        {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
-        }
-        else if(horizontal > 0)
+        if(horizontal > 0)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
+            _animator.SetBool("IsRunning", true);
+        }
+        else if(horizontal < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+            _animator.SetBool("IsRunning", true);
         }
 
-        if(Input.GetButtonDown("Jump") && sensor.isGrounded)
+        else
+        {
+            _animator.SetBool("IsRunning", false);
+        }
+
+        if(Input.GetButtonDown("Jump") && _groundSensor.isGrounded)
         {
             rBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        }        
+            _animator.SetBool("IsJumping", !_groundSensor.isGrounded);
+        }
+        if(Input.GetButtonDown("Fire1"))
+        {
+            Shoot();
+        }
     }
+    
 
     void FixedUpdate()
     {
@@ -66,7 +85,8 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         gameManager.GameOver();
-        Destroy(this.gameObject);
+        _animator.SetTrigger("IsDead");
+        Destroy(this.gameObject, 0.5f);
     }
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -76,5 +96,10 @@ public class PlayerController : MonoBehaviour
             gameManager.AddCoin();
             Destroy(collider.gameObject);
         }
+    }
+
+    void Shoot()
+    {
+        Instantiate(firePrefab, fireSpawn.position, fireSpawn.rotation);
     }
 }
